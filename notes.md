@@ -32,3 +32,8 @@ It should be something like:
 2. In the left sidebar, click on **Subscriptions**.
 3. You’ll see a list of your subscriptions. The **Subscription ID** for each will be displayed in the list or by clicking on the specific subscription for more details.
 
+# If the AZURE_CREDENTIALS doesn't work
+## Confirm the Service Principal's Existence and Permissions:
+```az ad sp show --id b3b2dc57-73ad-41be-8312-86429b91c2f9```
+## Confirm the Service Principal Role Assignment
+
