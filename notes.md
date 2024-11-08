@@ -6,6 +6,19 @@ The `secrets.ACR_USERNAME` and `secrets.ACR_PASSWORD` value is derived from the 
 
 ## secrets.AZURE_CREDENTIALS
 Run the command `az ad sp create-for-rbac --name "my-ml-service-principal" --role Contributor --scopes /subscriptions/04c1b27c-fcd8-43ba-96a2-cfe04a58d0a5` to obtain the value for AZURE_CREDENTIALS. Then, store this value in GitHub as a repository secret. 
+
+When adding this JSON to GitHub as the `AZURE_CREDENTIALS` secret, ensure you map the fields correctly. For GitHub Actions, rename `appId` to `clientId`, `password` to `clientSecret`, and `tenant` to `tenantId`.
+
+It should be something like:
+```
+{
+  "clientId": "XXXX",
+  "clientSecret": "XXX",
+  "subscriptionId": "XXX",
+  "tenantId": "XXX"
+}
+```
+
 - **`az ad sp create-for-rbac`**: This part of the command tells Azure CLI to create a new service principal (SP) for role-based access control (RBAC). Service principals are identities in Azure Active Directory used by applications and automation tools to access Azure resources securely.
 
 - **`--name "my-ml-service-principal"`**: This specifies the name of the service principal, in this case, `"my-ml-service-principal"`. You can choose any name that helps identify the purpose of the service principal.
