@@ -27,13 +27,20 @@ It should be something like:
 
 - **`--scopes /subscriptions/04c1b27c-fcd8-43ba-96a2-cfe04a58d0a5`**: This specifies the scope of permissions for the service principal. Here, the scope is set to an Azure subscription with the ID `04c1b27c-fcd8-43ba-96a2-cfe04a58d0a5`. This means the service principal’s permissions (Contributor role) will apply to this entire subscription and all resources within it.
 ### How to Get the Subscription ID
-
+#### Check from website
 1. Log in to the [Azure Portal](https://portal.azure.com/).
 2. In the left sidebar, click on **Subscriptions**.
 3. You’ll see a list of your subscriptions. The **Subscription ID** for each will be displayed in the list or by clicking on the specific subscription for more details.
-
+#### Check by CLI
+```
+az account list --output table
+```
 # If the AZURE_CREDENTIALS doesn't work
 ## Confirm the Service Principal's Existence and Permissions:
 ```az ad sp show --id b3b2dc57-73ad-41be-8312-86429b91c2f9```
-## Confirm the Service Principal Role Assignment
+## Create a new one
+```
+az ad sp create-for-rbac --name "github-actions-sp" --role Contributor --scopes /subscriptions/04c1b27c-fcd8-43ba-96a2-cfe04a58d0a5 --sdk-auth
+```
+
 
