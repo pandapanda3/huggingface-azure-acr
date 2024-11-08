@@ -48,11 +48,6 @@ jobs:
     needs: build
     
     steps:
-      - name: Print Image Name
-        run: |
-          echo "Image Name: demoalfredo.azurecr.io/${{ env.REPO }}:${{ github.sha }}"
-
-
       - name: Azure Login
         uses: azure/login@v1
         with:

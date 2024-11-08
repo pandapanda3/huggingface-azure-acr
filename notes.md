@@ -42,5 +42,14 @@ az account list --output table
 ```
 az ad sp create-for-rbac --name "github-actions-sp" --role Contributor --scopes /subscriptions/04c1b27c-fcd8-43ba-96a2-cfe04a58d0a5 --sdk-auth
 ```
+For CI/CD or GitHub Actions: Use `--sdk-auth` to get the output in a format that can be directly used in tools like GitHub Actions, where it will likely be placed in a secret and referenced as `AZURE_CREDENTIALS`.
+# Check the result
+## Build and push container image to ACR registry
+To check if a new image has been pushed in Azure, open the specified **Container Registry**, click on **Repositories**, and see if there are any new images listed.
 
+eg: [ACR registry](https://portal.azure.com/#view/Microsoft_Azure_ContainerRegistries/RepositoryBlade/id/%2Fsubscriptions%2F04c1b27c-fcd8-43ba-96a2-cfe04a58d0a5%2FresourceGroups%2Fdemo-ml%2Fproviders%2FMicrosoft.ContainerRegistry%2Fregistries%2Fdemoalfredo/repository/pandapanda3%2Fhuggingface-azure-acr)
+## New updates on Container App
+In Azure, open the specified **Container App**, click on **Revisions and replicas**, and check if a new image is being deployed.
+
+eg: [Container App](https://portal.azure.com/#@peggypandayeah.onmicrosoft.com/resource/subscriptions/04c1b27c-fcd8-43ba-96a2-cfe04a58d0a5/resourceGroups/demo-ml/providers/Microsoft.App/containerApps/azure-container-app-demo/revisionManagement)
 
