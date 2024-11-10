@@ -1,4 +1,4 @@
-# Trigger Auto Deployment for demo-container
+# Trigger Auto Deployment for azure-container-app-demo
 
 This project is an automated CI/CD pipeline designed to build, push, and deploy a container image to an Azure Container App. The pipeline uses GitHub Actions to trigger the deployment on every change made to the main branch or manually, allowing for seamless integration and continuous deployment.
 
