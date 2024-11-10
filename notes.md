@@ -43,13 +43,43 @@ az account list --output table
 az ad sp create-for-rbac --name "github-actions-sp" --role Contributor --scopes /subscriptions/04c1b27c-fcd8-43ba-96a2-cfe04a58d0a5 --sdk-auth
 ```
 For CI/CD or GitHub Actions: Use `--sdk-auth` to get the output in a format that can be directly used in tools like GitHub Actions, where it will likely be placed in a secret and referenced as `AZURE_CREDENTIALS`.
+
+# Setting variables in `docker-image.yml`
+## secrets.DOCKER_HUB_USERNAME and secrets.DOCKER_HUB_ACCESS_TOKEN
+
+1. Open [https://hub.docker.com/](https://hub.docker.com/).
+2. Click on your profile avatar in the upper right corner and select **Account Settings** from the dropdown menu.
+3. On the redirected page, go to **Security** and select **Personal access tokens**.
+4. Click on **Generate New Token**, fill in the **access token description**, and set the access permissions to **Read, Write, Delete**.
+5. Once the token is created, copy the command `docker login -u XXX`, where `XXX` is your Docker Hub username.
+6. Use `XXX` as `secrets.DOCKER_HUB_USERNAME`, and the generated token value as `secrets.DOCKER_HUB_ACCESS_TOKEN`.
+
+### Storing Secrets in GitHub
+
+1. Go to your GitHub repository.
+2. Navigate to **Settings** → **Secrets and Variables** → **Actions**.
+3. Click on **New Repository Secret** and add the following secrets:
+   - **DOCKER_HUB_USERNAME**: Set the value to `XXX` (your Docker Hub username).
+   - **DOCKER_HUB_ACCESS_TOKEN**: Set the value to the generated token.
+
+These secrets will now be securely stored in GitHub for use in your workflows.
+
+## Create a New Repository in Docker Hub
+
+To create a new repository in Docker Hub, go to [https://hub.docker.com/repositories/pandapanda3](https://hub.docker.com/repositories/pandapanda3), and click on **Create New Repository**.
+
 # Check the result
-## Build and push container image to ACR registry
+## On AZURE
+### Build and push container image to ACR registry
 To check if a new image has been pushed in Azure, open the specified **Container Registry**, click on **Repositories**, and see if there are any new images listed.
 
 eg: [ACR registry](https://portal.azure.com/#view/Microsoft_Azure_ContainerRegistries/RepositoryBlade/id/%2Fsubscriptions%2F04c1b27c-fcd8-43ba-96a2-cfe04a58d0a5%2FresourceGroups%2Fdemo-ml%2Fproviders%2FMicrosoft.ContainerRegistry%2Fregistries%2Fdemoalfredo/repository/pandapanda3%2Fhuggingface-azure-acr)
-## New updates on Container App
+### New updates on Container App
 In Azure, open the specified **Container App**, click on **Revisions and replicas**, and check if a new image is being deployed.
 
 eg: [Container App](https://portal.azure.com/#@peggypandayeah.onmicrosoft.com/resource/subscriptions/04c1b27c-fcd8-43ba-96a2-cfe04a58d0a5/resourceGroups/demo-ml/providers/Microsoft.App/containerApps/azure-container-app-demo/revisionManagement)
+## On DockerHub
 
+Go to [DockerHub repository](https://hub.docker.com/repository/docker/pandapanda3/huggingface-azure-acr/general) and check the **Tags** section to see if the newly built images are present. There should be two tags:
+- `latest`: Always points to the most recent build.
+- `${{ env.REPO }}-${{ github.sha }}`: A unique tag with values for `env.REPO` and `github.sha`.
