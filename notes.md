@@ -83,3 +83,13 @@ eg: [Container App](https://portal.azure.com/#@peggypandayeah.onmicrosoft.com/re
 Go to [DockerHub repository](https://hub.docker.com/repository/docker/pandapanda3/huggingface-azure-acr/general) and check the **Tags** section to see if the newly built images are present. There should be two tags:
 - `latest`: Always points to the most recent build.
 - `${{ env.REPO }}-${{ github.sha }}`: A unique tag with values for `env.REPO` and `github.sha`.
+
+# Check Log
+```
+az containerapp logs show --name $CONTAINER_APP_NAME --resource-group $RESOURCE_GROUP_NAME --follow
+```
+In this case, it's `az containerapp logs show --name azure-container-app-demo --resource-group demo-ml --follow`
+
+In Azure Container Apps, select one of the apps and click to enter it. In the left sidebar, click on "Overview" to view the Application URL. By clicking on this link, you can access the service. Adding /docs to the end of this URL allows you to interact with the service. All interaction records will appear in the logs.
+
+When you're no longer using this service, remember to go to the Overview page and click the "Stop" button to pause the service; otherwise, it will continue to incur charges.
